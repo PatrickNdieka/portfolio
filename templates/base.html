@@ -4,10 +4,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %} {% endblock title%}</title>
-    <script src="{% static '/js/htmx.min.js' %}"></script>
+    <!-- meta block -->
+    {% block meta %} {% endblock meta %}
+    <!-- style sheets -->
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}" />
+    {% endblock stylesheets %}
+    <!-- title block -->
+    {% block title %} {% endblock title %}
   </head>
-  <body>
+  <body data-full-page="true">
+    <!-- navbar -->
+    {% include 'snippets/_navbar_snippet.html' %}
+    <!-- page content block -->
     {% block content %} {% endblock content %}
+
+    <!-- footer -->
+    {% include 'snippets/_footer_snippet.html' %}
+    <!-- scripts -->
+    {% block scripts %}
+    <script src="{% static 'assets/js/htmx.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    {% endblock scripts %}
   </body>
 </html>

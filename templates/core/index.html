@@ -1,7 +1,97 @@
 {% extends 'base.html' %}
-
+<!-- load static -->
 {% load static %}
-
+<!-- main content -->
 {% block content %}
-<h1>This is the index page</h1>
-{% endblock content%}
+<main class="main about">
+  <section class="landing">
+    <h2 class="landing-title">Patrick Ndieka</h2>
+    <div class="landing-content">
+      <div class="role-wrapper">
+        <!-- <div class="static-text">I'm a</div> -->
+        <ul class="dynamic-text">
+          <li><p class="role">Data scientist.</p></li>
+          <li><p class="role">Data analyst.</p></li>
+          <li><p class="role">Web developer.</p></li>
+          <li><p class="role">Freelancer.</p></li>
+        </ul>
+      </div>
+    </div>
+    <a href="#" class="call-to-action btn">View Portfolio</a>
+  </section>
+  <!-- My Services -->
+  <section class="my-services" id="services">
+    <div class="container">
+      <h2 class="section__title section__title--services">What I do</h2>
+      <div class="services">
+        <div class="service">
+          <h3>Data Anaylsis</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc mattis
+            magna tempus tortor feugiat convallis. Duis tristique magna justo,
+            ut pulvinar urna efficitur id. Nulla nec vehicula dolor. Nulla
+            facilisi. Sed rhoncus elit quam, at semper est tempus sit amet.
+          </p>
+        </div>
+        <!--close service-->
+
+        <div class="service">
+          <h3>Machine Learning</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc mattis
+            magna tempus tortor feugiat convallis. Duis tristique magna justo,
+            ut pulvinar urna efficitur id. Nulla nec vehicula dolor. Nulla
+            facilisi. Sed rhoncus elit quam, at semper est tempus sit amet.
+          </p>
+        </div>
+
+        <div class="service">
+          <h3>Web Development</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc mattis
+            magna tempus tortor feugiat convallis. Duis tristique magna justo,
+            ut pulvinar urna efficitur id. Nulla nec vehicula dolor. Nulla
+            facilisi. Sed rhoncus elit quam, at semper est tempus sit amet.
+          </p>
+        </div>
+        <!--close service-->
+        <!--close service-->
+      </div>
+      <!--close services-->
+      <a href="#work" class="btn">View Portfolio</a>
+    </div>
+  </section>
+
+  <!--About me-->
+  <section class="container">
+    <div class="about-me" id="about">
+      <h2 class="section__title section__title--about">Who I am</h2>
+      <p class="section__subtitle section__subtitle--about">
+        Data analyst based at Nairobi, Kenya
+      </p>
+      <div class="about-me__body">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc mattis
+          magna tempus tortor feugiat convallis. Duis tristique magna justo, ut
+          pulvinar urna efficitur id. Nulla nec vehicula dolor. Nulla facilisi.
+          Sed rhoncus elit quam, at semper est tempus sit amet. Ut pulvinar urna
+          efficitur id. Nulla nec vehicula dolor.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc mattis
+          magna tempus tortor feugiat convallis. Duis tristique magna justo, ut
+          pulvinar urna efficitur id. Nulla nec vehicula dolor. Nulla facilisi.
+          Sed rhoncus elit quam, at semper est tempus sit amet. Ut pulvinar urna
+          efficitur id. Nulla nec vehicula dolor.
+        </p>
+      </div>
+
+      <img
+        src="{% static 'assets/img/about-me-img.jpg' %}"
+        alt="Patrick leaning against a bus"
+        class="about-me__img"
+      />
+    </div>
+  </section>
+</main>
+{% endblock content %}
