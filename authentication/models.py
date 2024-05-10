@@ -26,6 +26,7 @@ class AccountManager(BaseUserManager):
 class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=30)
+    other_names = models.CharField(max_length=100, null=True, blank=True)
     last_name = models.CharField(max_length=30)
     phone_number = PhoneNumberField(
         help_text='Enter a valid phone number like +12125552368',
@@ -50,11 +51,13 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     @property
     def full_name(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.first_name}' \
+            f'{(" " + self.other_names + " ") if self.other_names else " "}' \
+            f'{self.last_name}'
 
     @property
     def short_name(self):
-        return self.first_name
+        return self.last_name
 
     def __str__(self):
         return self.full_name

@@ -16,17 +16,18 @@ class AccountsAdmin(UserAdmin):
     add_form = AccountsAdminCreationForm
     form = AccountsAdminChangeForm
     model = Account
-    list_display = ['email', 'first_name',
-                    'last_name', 'phone_number', 'is_admin']
+    list_display = (
+        'email', 'first_name', 'other_names', 'last_name', 'phone_number', 'is_admin'
+    )
     fieldsets = (
         ('Personal info', {
-         'fields': ('email', 'first_name', 'last_name', 'phone_number')}),
+         'fields': ('email', 'first_name', 'other_names', 'last_name', 'phone_number')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
             'fields': (
-                'email', 'first_name', 'last_name',
+                'email', 'first_name', 'other_names', 'last_name',
                 'phone_number', 'password1', 'password2',
             ),
         }),
@@ -36,7 +37,9 @@ class AccountsAdmin(UserAdmin):
 
     search_fields = ('email',)
     ordering = ('email',)
-    list_filter = ('email', 'first_name', 'last_name', 'is_admin')
+    list_filter = (
+        'email', 'first_name', 'other_names', 'last_name', 'is_admin'
+    )
     inlines = (ProfileInlineAdmin,)
 
     def get_fieldsets(self, request, obj=None):
@@ -52,7 +55,8 @@ class AccountsAdmin(UserAdmin):
             readonly_fields.extend(
                 ['is_admin', 'is_active', 'groups'])
         elif obj and obj != request.user:
-            readonly_fields.extend(['first_name', 'last_name', 'phone_number'])
+            readonly_fields.extend(
+                ['first_name', 'other_names', 'last_name', 'phone_number'])
         return tuple(readonly_fields)
 
     def get_inline_instances(self, request, obj=None):

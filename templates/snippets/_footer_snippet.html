@@ -1,7 +1,12 @@
 <footer class="footer">
+  {% if social_links %}
   <div class="social-links">
-    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-    <a href="#"><i class="fa-brands fa-github"></i></a>
-    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+    {% for platform, link in social_links.items %}
+    <a href="{{ link.url }}" aria-label="{{ platform }} link" target="_blank">
+      {{ link.icon|safe }}
+    </a>
+    {% endfor %}
   </div>
+  {% endif %}
+  <button class="theme-toggle"></button>
 </footer>

@@ -11,7 +11,7 @@ class AccountsAdminCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Account
         fields = (
-            'email', 'first_name', 'last_name', 'phone_number', 'user_permissions'
+            'email', 'first_name', 'other_names', 'last_name', 'phone_number', 'user_permissions'
         )
 
     def __init__(self, *args, **kwargs):
@@ -22,7 +22,6 @@ class AccountsAdminCreationForm(UserCreationForm):
 class AccountsAdminChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = Account
-        fields = ('last_name', 'phone_number',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

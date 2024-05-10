@@ -8,7 +8,7 @@
     <h2 class="landing-title">Patrick Ndieka</h2>
     <div class="landing-content">
       <div class="role-wrapper">
-        <!-- <div class="static-text">I'm a</div> -->
+        <div class="static-text">I'm a</div>
         <ul class="dynamic-text">
           <li><p class="role">Data scientist.</p></li>
           <li><p class="role">Data analyst.</p></li>
@@ -24,37 +24,13 @@
     <div class="container">
       <h2 class="section__title section__title--services">What I do</h2>
       <div class="services">
+        {% for service in services %}
+        <!-- Service -->
         <div class="service">
-          <h3>Data Anaylsis</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc mattis
-            magna tempus tortor feugiat convallis. Duis tristique magna justo,
-            ut pulvinar urna efficitur id. Nulla nec vehicula dolor. Nulla
-            facilisi. Sed rhoncus elit quam, at semper est tempus sit amet.
-          </p>
+          <h3>{{ service.name }}</h3>
+          {{ service.description|safe }}
         </div>
-        <!--close service-->
-
-        <div class="service">
-          <h3>Machine Learning</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc mattis
-            magna tempus tortor feugiat convallis. Duis tristique magna justo,
-            ut pulvinar urna efficitur id. Nulla nec vehicula dolor. Nulla
-            facilisi. Sed rhoncus elit quam, at semper est tempus sit amet.
-          </p>
-        </div>
-
-        <div class="service">
-          <h3>Web Development</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc mattis
-            magna tempus tortor feugiat convallis. Duis tristique magna justo,
-            ut pulvinar urna efficitur id. Nulla nec vehicula dolor. Nulla
-            facilisi. Sed rhoncus elit quam, at semper est tempus sit amet.
-          </p>
-        </div>
-        <!--close service-->
+        {% endfor %}
         <!--close service-->
       </div>
       <!--close services-->
@@ -67,30 +43,18 @@
     <div class="about-me" id="about">
       <h2 class="section__title section__title--about">Who I am</h2>
       <p class="section__subtitle section__subtitle--about">
-        Data analyst based at Nairobi, Kenya
+        Data analyst based at {{ about_details.location|title }}
       </p>
+      {% if about_details %}
       <div class="about-me__body">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc mattis
-          magna tempus tortor feugiat convallis. Duis tristique magna justo, ut
-          pulvinar urna efficitur id. Nulla nec vehicula dolor. Nulla facilisi.
-          Sed rhoncus elit quam, at semper est tempus sit amet. Ut pulvinar urna
-          efficitur id. Nulla nec vehicula dolor.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc mattis
-          magna tempus tortor feugiat convallis. Duis tristique magna justo, ut
-          pulvinar urna efficitur id. Nulla nec vehicula dolor. Nulla facilisi.
-          Sed rhoncus elit quam, at semper est tempus sit amet. Ut pulvinar urna
-          efficitur id. Nulla nec vehicula dolor.
-        </p>
+        {{ about_details.about_content.get_value|safe }}
       </div>
 
       <img
-        src="{% static 'assets/img/about-me-img.jpg' %}"
+        src="{{ about_details.about_image.get_value.url }}"
         alt="Patrick leaning against a bus"
-        class="about-me__img"
-      />
+        class="about-me__img" />
+      {% endif %}
     </div>
   </section>
 </main>
