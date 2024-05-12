@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView, TemplateView
 
-from .models import Section, SectionInformation, Service, ProjectPortfolio, StatusChoices
+from .models import Section, SectionInformation, Service, ProjectPortfolio, StatusChoices, ValueType
 
 
 class IndexView(TemplateView):
@@ -14,8 +14,8 @@ class IndexView(TemplateView):
             'section').filter(section__name__icontains='about')
 
         about_details = {
-            'about_image': about_details.filter(title__icontains='image').first(),
-            'about_content': about_details.filter(title__icontains='content').first(),
+            'about_image': about_details.filter(title__icontains='image', value_type=ValueType.IMAGE).first(),
+            'about_content': about_details.filter(title__icontains='content', value_type=ValueType.HTML).first(),
         }
         context.update(
             about_details=about_details,
@@ -30,9 +30,33 @@ class ProjectListView(ListView):
         'skills').filter(status=StatusChoices.PUBLISHED)
     context_object_name = 'projects'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(featured=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        featured_project = self.queryset.filter(featured=True)
+        if featured_project:
+            context.update({
+                'featured_project': featured_project.get(),
+            })
+        return context
+
 
 class ProjectDetailView(DetailView):
     template_name = 'core/project_detail.html'
     model = ProjectPortfolio
     context_object_name = 'project'
     query_pk_and_slug = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        about_image = SectionInformation.objects.select_related(
+            'section').filter(
+                section__name__icontains='about',
+                title__icontains='image',
+                value_type=ValueType.IMAGE)
+        if about_image:
+            context.update({'about_image': about_image.first()})
+        return context

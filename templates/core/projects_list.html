@@ -21,30 +21,51 @@
   <section class="my-projects" id="projects">
     <div class="container">
       <div class="projects">
-        {% for project in projects %}
+        {% if featured_project %}
         <!-- Project -->
-        <div>
-          <article
-            class="project card"
-            onclick="window.location.href='{{ project.get_absolute_url }}'">
-            <img
-              src="{{ project.featured_image.url }}"
-              alt="Portfolio project image about the topic {{ project.title }}"
-              class="project__img"
-              for="project_{{ project.id }}" />
-            <div class="card__body">
-              <h3 class="section__title section__title--project">
-                {{ project.title }}
-              </h3>
-              <div class="project__body">{{ project.description|safe }}</div>
-              <div class="card__info">
-                <a href="{{ project.get_absolute_url }}" class="btn">
-                  <i class="fa-solid fa-arrow-right"></i>
-                </a>
-              </div>
+        <article
+          class="project featured card"
+          onclick="window.location.href='{{ featured_project.get_absolute_url }}'">
+          <img
+            class="project__img"
+            src="{{ featured_project.featured_image.url }}"
+            alt="Portfolio project image about the topic {{ featured_project.title }}" />
+          <div class="card__body">
+            <h3 class="section__title section__title--project">
+              {{ featured_project.title }}
+            </h3>
+            <div class="project__body">
+              {{ featured_project.description|safe }}
             </div>
-          </article>
-        </div>
+            <div class="card__info">
+              <a href="{{ featured_project.get_absolute_url }}" class="btn">
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+        <!--close project-->
+        {% endif%} {% for project in projects %}
+        <!-- Project -->
+        <article
+          class="project card"
+          onclick="window.location.href='{{ project.get_absolute_url }}'">
+          <img
+            class="project__img"
+            src="{{ project.featured_image.url }}"
+            alt="Portfolio project image about the topic {{ project.title }}" />
+          <div class="card__body">
+            <h3 class="section__title section__title--project">
+              {{ project.title }}
+            </h3>
+            <div class="project__body">{{ project.description|safe }}</div>
+            <div class="card__info">
+              <a href="{{ project.get_absolute_url }}" class="btn">
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </article>
         <!--close project-->
         {% endfor %}
       </div>

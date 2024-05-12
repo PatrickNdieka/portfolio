@@ -17,7 +17,7 @@
     <!-- title block -->
     {% block title %} {% endblock title %}
   </head>
-  <body data-full-page="true">
+  <body {% if not 'project' in request.path %} data-full-page="true" {% endif%}>
     <!-- navbar -->
     {% include 'snippets/_navbar_snippet.html' %}
     <!-- page content block -->

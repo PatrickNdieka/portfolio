@@ -3,5 +3,36 @@
 {% load static %}
 <!-- main content -->
 {% block content %}
-<h1>{{project.title}}</h1>
+<!-- Main content -->
+<main class="main individual-portfolio">
+  <section class="container">
+    <article class="project__article">
+      <a href="{% url 'core:portfolio' %}" class="btn btn-back">
+        <i class="fa-solid fa-arrow-left-long"></i>
+        Back
+      </a>
+      <div class="project__hero">
+        <img
+          src="{{ project.featured_image.url }}"
+          alt="Portfolio project image about the topic {{ project.title }}"
+          class="project__img"
+          for="project_{{ project.id }}" />
+        <div class="project__hero--content">
+          <div class="project__hero--info">{{ project.published_on }}</div>
+        </div>
+      </div>
+      <div class="project__body">
+        <h2 class="section__title section__title--project">
+          {{ project.title }}
+        </h2>
+        <div class="project__description">{{ project.description|safe }}</div>
+        {{ project.content|safe }}
+      </div>
+    </article>
+  </section>
+</main>
+<!-- Include aside content -->
+{% include 'snippets/_aside_snippet.html' %}
+<!-- End aside content -->
+
 {% endblock content %}
