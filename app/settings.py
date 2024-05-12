@@ -33,8 +33,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # packages
-    'debug_toolbar',
-    'django_extensions',
+    # 'debug_toolbar',
+    # 'django_extensions',
     'phonenumber_field',
     'tinymce',
     'fontawesomefree',
@@ -57,8 +57,8 @@ MIDDLEWARE = [
 ]
 
 # Include debug tool bar middleware if debug is True
-if DEBUG:
-    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+# if DEBUG:
+#     MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
 
 ROOT_URLCONF = 'app.urls'
 

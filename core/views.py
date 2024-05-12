@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from django.db.models import Case, When, F, Value, CharField, Q
-from django.views.generic import TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 
-from .models import Section, SectionInformation, Service
+from .models import Section, SectionInformation, Service, ProjectPortfolio, StatusChoices
 
 
 class IndexView(TemplateView):
@@ -23,3 +22,17 @@ class IndexView(TemplateView):
             services=services
         )
         return context
+
+
+class ProjectListView(ListView):
+    template_name = 'core/projects_list.html'
+    queryset = ProjectPortfolio.objects.prefetch_related(
+        'skills').filter(status=StatusChoices.PUBLISHED)
+    context_object_name = 'projects'
+
+
+class ProjectDetailView(DetailView):
+    template_name = 'core/project_detail.html'
+    model = ProjectPortfolio
+    context_object_name = 'project'
+    query_pk_and_slug = True

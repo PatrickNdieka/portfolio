@@ -72,17 +72,28 @@ class ServiceAdmin(admin.ModelAdmin):
 
 
 class ProjectPortfolioAdmin(admin.ModelAdmin):
-    list_display = ('title', 'featured', 'status', 'published_on', 'author')
+    list_display = ('title', 'featured', 'status', 'published_on', 'author',)
     list_display_links = ('title',)
-    list_editable = ('featured', 'status')
-    list_filter = ('status', 'author')
+    list_editable = ('status',)
+    list_filter = ('status', 'author',)
     list_select_related = ('author',)
     prepopulated_fields = {'slug': ['title']}
-    autocomplete_fields = ('author',)
+    readonly_fields = ('author',)
     date_hierarchy = "published_on"
     empty_value_display = "-Select option-"
     radio_fields = {"status": admin.HORIZONTAL}
     inlines = (SkillInlineAdmin, ServiceInlineAdmin)
+
+    def save_model(self, request, obj, form, change):
+        if not obj.pk:
+            obj.author = request.user
+        if obj.featured:
+            # Check if there are any other featured projects
+            existing_featured_projects = ProjectPortfolio.objects.filter(
+                featured=True).exclude(pk=obj.pk)
+            if existing_featured_projects.exists():
+                existing_featured_projects.update(featured=False)
+        super().save_model(request, obj, form, change)
 
 
 class ConfigurationSettingAdmin(admin.ModelAdmin):

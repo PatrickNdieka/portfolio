@@ -17,10 +17,13 @@
         </ul>
       </div>
     </div>
-    <a href="#" class="call-to-action btn">View Portfolio</a>
+    <a href="{% url 'core:portfolio' %}" class="call-to-action btn">
+      View Portfolio
+    </a>
   </section>
   <!-- My Services -->
-  <section class="my-services" id="services">
+  <section class="my-services">
+    <p id="services"></p>
     <div class="container">
       <h2 class="section__title section__title--services">What I do</h2>
       <div class="services">
@@ -34,13 +37,14 @@
         <!--close service-->
       </div>
       <!--close services-->
-      <a href="#work" class="btn">View Portfolio</a>
+      <a href="{% url 'core:portfolio' %}" class="btn">View Portfolio</a>
     </div>
   </section>
 
   <!--About me-->
   <section class="container">
-    <div class="about-me" id="about">
+    <p id="about"></p>
+    <div class="about-me">
       <h2 class="section__title section__title--about">Who I am</h2>
       <p class="section__subtitle section__subtitle--about">
         Data analyst based at {{ about_details.location|title }}

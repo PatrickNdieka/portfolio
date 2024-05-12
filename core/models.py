@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
@@ -15,22 +16,28 @@ class StatusChoices(models.IntegerChoices):
 
 class ProjectPortfolio(models.Model):
     title = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     description = tinymce_models.HTMLField()
     content = tinymce_models.HTMLField()
     featured_image = models.ImageField(upload_to='projects/featured/')
     featured = models.BooleanField(
         verbose_name='Featured project', default=False)
     status = models.IntegerField(
-        choices=StatusChoices, default=StatusChoices.DRAFT)
+        choices=StatusChoices.choices, default=StatusChoices.DRAFT)
     published_on = models.DateField(verbose_name='Publish date')
-    author = models.OneToOneField(
+    author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='author')
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ('-published_on', 'title',)
+
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('core:portfolio_project_detail', kwargs={'slug': self.slug})
 
 
 class Skill(models.Model):
