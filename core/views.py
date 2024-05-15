@@ -60,3 +60,7 @@ class ProjectDetailView(DetailView):
         if about_image:
             context.update({'about_image': about_image.first()})
         return context
+
+
+def consent_message(request):
+    return render(request, 'core/partials/consent_message_partial.html')

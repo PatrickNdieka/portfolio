@@ -9,4 +9,5 @@ urlpatterns = [
     path('portfolio/', views.ProjectListView.as_view(), name='portfolio'),
     path('portfolio/project/<slug:slug>/', views.ProjectDetailView.as_view(),
          name='portfolio_project_detail'),
+    path('consent_message/', views.consent_message, name='consent_message'),
 ]
