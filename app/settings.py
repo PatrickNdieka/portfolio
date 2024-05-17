@@ -17,9 +17,10 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split()
 
 # Debug-Toolbar configurations
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
+if DEBUG:
+    INTERNAL_IPS = [
+        '127.0.0.1',
+    ]
 
 
 # Application definition
@@ -33,8 +34,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # packages
-    # 'debug_toolbar',
-    # 'django_extensions',
+    'debug_toolbar',
+    'django_extensions',
     'phonenumber_field',
     'tinymce',
     'fontawesomefree',
@@ -57,8 +58,8 @@ MIDDLEWARE = [
 ]
 
 # Include debug tool bar middleware if debug is True
-# if DEBUG:
-#     MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+if DEBUG:
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
 
 ROOT_URLCONF = 'app.urls'
 
@@ -85,21 +86,22 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+PRODUCTION_ENV = config('PRODUCTION_ENV', False, cast=bool)
 
-if not DEBUG:
-    DATABASES['default'] = {
-        'ENGINE': config('DB_ENGINE'),
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT'),
+
+if DEBUG and not PRODUCTION_ENV:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    import dj_database_url
+
+    POSTGRES_DB_URL = config('POSTGRES_DB_URL', '')
+    DATABASES = {
+        'default': dj_database_url.parse(POSTGRES_DB_URL)
     }
 
 

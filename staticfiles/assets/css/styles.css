@@ -857,7 +857,7 @@ img {
   top: 0;
   height: 70px;
   list-style-type: none;
-  animation: slide 16s steps(4) infinite;
+  animation: slide 8s steps(2) infinite;
   width: max-content;
 }
 
@@ -901,7 +901,7 @@ img {
 
 @keyframes slide {
   100% {
-    top: -280px;
+    top: -140px;
   }
 }
 
