@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -49,6 +50,7 @@ AUTH_USER_MODEL = 'authentication.Account'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -99,7 +101,7 @@ if DEBUG and not PRODUCTION_ENV:
 else:
     import dj_database_url
 
-    POSTGRES_DB_URL = config('POSTGRES_DB_URL', '')
+    POSTGRES_DB_URL = config('DATABASE_URL', '')
     DATABASES = {
         'default': dj_database_url.parse(POSTGRES_DB_URL)
     }
@@ -140,14 +142,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
-
 STATICFILES_DIRS = [
     BASE_DIR / 'staticfiles',  # Add your static directories here
 ]
+# Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+    # and renames the files with unique names for each version to support long-term caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
