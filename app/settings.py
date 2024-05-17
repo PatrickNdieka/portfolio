@@ -143,8 +143,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'staticfiles',  # Add your static directories here
+    BASE_DIR / 'static',  # Add your static directories here
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
