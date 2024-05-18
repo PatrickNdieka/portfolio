@@ -24,9 +24,11 @@ CSRF_COOKIE_SECURE = True
 
 SESSION_COOKIE_SECURE = True
 
-ADMINS = config('ADMINS', default='').split()
+ADMINS = [tuple(admin.split('-'))
+          for admin in config('ADMINS', default='').split()]
 
-MANAGERS = config('MANAGERS', default='').split()
+MANAGERS = [tuple(manager.split('-'))
+            for manager in config('MANAGERS', default='').split()]
 
 # Debug-Toolbar configurations
 if DEBUG:
@@ -48,7 +50,7 @@ INSTALLED_APPS = [
     # packages
     'debug_toolbar',
     'django_extensions',
-    'whitenoise.runserver_nostatic',
+    # 'whitenoise.runserver_nostatic',
     'phonenumber_field',
     'tinymce',
     'fontawesomefree',
@@ -158,11 +160,11 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STORAGES = {
-    'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-    },
-}
+# STORAGES = {
+#     'staticfiles': {
+#         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+#     },
+# }
 
 
 MEDIA_URL = 'media/'
