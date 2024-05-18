@@ -1,3 +1,4 @@
+import dj_database_url
 from pathlib import Path
 import os
 from decouple import config
@@ -18,6 +19,14 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split()
 
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='').split()
+
+CSRF_COOKIE_SECURE = True
+
+SESSION_COOKIE_SECURE = True
+
+ADMINS = config('ADMINS', default='').split()
+
+MANAGERS = config('MANAGERS', default='').split()
 
 # Debug-Toolbar configurations
 if DEBUG:
@@ -94,20 +103,19 @@ WSGI_APPLICATION = 'app.wsgi.application'
 PRODUCTION_ENV = config('PRODUCTION_ENV', False, cast=bool)
 
 
-if DEBUG and not PRODUCTION_ENV:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    import dj_database_url
+# if DEBUG and not PRODUCTION_ENV:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
+# else:
 
-    POSTGRES_DB_URL = config('DATABASE_URL', '')
-    DATABASES = {
-        'default': dj_database_url.parse(POSTGRES_DB_URL)
-    }
+POSTGRES_DB_URL = config('DATABASE_URL', '')
+DATABASES = {
+    'default': dj_database_url.parse(POSTGRES_DB_URL)
+}
 
 
 # Password validation
@@ -149,21 +157,16 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',  # Add your static directories here
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-# Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
-if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
-    # and renames the files with unique names for each version to support long-term caching
-    # White noise settings
-    STORAGES = {
-        'staticfiles': {
-            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-        },
-    }
+
+STORAGES = {
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
 
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
