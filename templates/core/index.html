@@ -62,4 +62,30 @@
     </div>
   </section>
 </main>
-{% endblock content %}
+{% endblock content %} {% block scripts %}
+<script>
+  const aboutSection = document.getElementById("about");
+  const servicesSection = document.getElementById("services");
+
+  window.addEventListener("scroll", () => {
+    if (aboutSection.getBoundingClientRect().top <= window.innerHeight * 0.4) {
+      if (!navigationBtns[2].classList.contains("active")) {
+        getActiveNavigation(navigationBtns[2]);
+      }
+    } else if (
+      servicesSection.getBoundingClientRect().top <=
+      window.innerHeight * 0.4
+    ) {
+      if (!navigationBtns[1].classList.contains("active")) {
+        getActiveNavigation(navigationBtns[1]);
+      }
+    } else {
+      if (!navigationBtns[0].classList.contains("active")) {
+        getActiveNavigation(navigationBtns[0]);
+      }
+    }
+  });
+</script>
+{{ block.super }}
+<!--  -->
+{% endblock scripts %}

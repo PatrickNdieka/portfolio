@@ -49,3 +49,19 @@ window.addEventListener("scroll", () => {
     navigation.classList.remove("scrollable");
   }
 });
+
+const getActiveNavigation = (btn) => {
+  navigationBtns.forEach((navBtn) => {
+    navBtn.classList.remove("active");
+  });
+  btn.classList.add("active");
+};
+
+const navigationBtns = navigation.querySelectorAll(".nav-item");
+
+navigationBtns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault;
+    getActiveNavigation(e.target.parentElement);
+  });
+});

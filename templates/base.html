@@ -26,9 +26,9 @@
     <!-- footer -->
     {% include 'snippets/_footer_snippet.html' %}
     <!-- scripts -->
+    <script src="{% static 'assets/js/htmx.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
     {% block scripts %}
-      <script src="{% static 'assets/js/htmx.min.js' %}"></script>
-      <script src="{% static 'assets/js/main.js' %}"></script>
       <script>
         document.addEventListener("DOMContentLoaded", function() {
             checkConsentAndFetchMessage();
