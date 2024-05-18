@@ -1,1 +1,1 @@
-web: gunicorn app.wsgi --lof-file -
+web: gunicorn app.wsgi
