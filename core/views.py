@@ -16,6 +16,7 @@ class IndexView(TemplateView):
         about_details = {
             'about_image': about_details.filter(title__icontains='image', value_type=ValueType.IMAGE).first(),
             'about_content': about_details.filter(title__icontains='content', value_type=ValueType.HTML).first(),
+            'about_location': about_details.filter(title__icontains='location', value_type=ValueType.HTML).first(),
         }
         context.update(
             about_details=about_details,

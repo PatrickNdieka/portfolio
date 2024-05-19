@@ -12,6 +12,7 @@ django-tinymce==4.0.0
 fontawesomefree==6.5.1
 gunicorn==22.0.0
 h11==0.14.0
+Markdown==3.6
 packaging==24.0
 phonenumbers==8.13.36
 pillow==10.3.0

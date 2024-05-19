@@ -446,8 +446,19 @@ img {
   top: 0;
 }
 
+.nav .logo a {
+  display: block;
+  height: 50px;
+  padding: 0.5em;
+  text-decoration: none;
+}
+
 .nav .logo a:hover {
   text-decoration: none;
+}
+
+.nav .logo a img {
+  height: 100%;
 }
 
 .nav-list {
@@ -1070,6 +1081,9 @@ img {
   padding-right: calc(200px + 3em);
 }
 
+.section__subtitle--about p {
+  display: inline;
+}
 .about-me__body {
   border-bottom: 1px solid var(--bs-accent);
 }

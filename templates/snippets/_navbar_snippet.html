@@ -1,3 +1,5 @@
+{% load static %}
+
 <header class="header">
   {% if user_details %} {% for value, detail in user_details.items %}
   <a
@@ -10,7 +12,11 @@
   {% endfor %} {% endif%}
 </header>
 <nav class="nav">
-  <div class="logo"><a href="{% url 'core:index' %}">Patrick Ndieka</a></div>
+  <div class="logo">
+    <a href="{% url 'core:index' %}">
+      <img src="{% static 'assets/images/portfolio-logo.ico' %}" alt="logo" />
+    </a>
+  </div>
   <ul id="nav-menu" class="nav-list">
     <li class="nav-item {% if request.path == '/' %} active {% endif %}">
       <a href="{% url 'core:index' %}" class="nav-link">Home</a>

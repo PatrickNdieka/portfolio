@@ -19,7 +19,7 @@ class ProjectPortfolio(models.Model):
     slug = models.SlugField(unique=True)
     description = tinymce_models.HTMLField()
     content = tinymce_models.HTMLField()
-    featured_image = models.ImageField(upload_to='projects/featured/')
+    featured_image = models.ImageField(upload_to='images/projects/featured/')
     featured = models.BooleanField(
         verbose_name='Featured project', default=False)
     status = models.IntegerField(
@@ -42,6 +42,7 @@ class ProjectPortfolio(models.Model):
 
 class Skill(models.Model):
     name = models.CharField(verbose_name='Skill', max_length=150)
+    image = models.ImageField(upload_to='images/skills/', null=True)
     projects = models.ManyToManyField(
         'ProjectPortfolio', related_name='skills')
     created_on = models.DateTimeField(auto_now_add=True)
