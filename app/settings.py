@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     # packages
     'phonenumber_field',
     'tinymce',
-    'storages',
+    # 'storages',
     'fontawesomefree',
 
     # apps
@@ -162,6 +162,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',  # Add your static directories here
 ]
+
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = 'media/'
@@ -181,7 +182,7 @@ STORAGES = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# # AWS configurations
+# AWS configurations
 # AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', '')
 # AWS_S3_CUSTOM_DOMAIN = config('AWS_S3_CUSTOM_DOMAIN', '')
 
