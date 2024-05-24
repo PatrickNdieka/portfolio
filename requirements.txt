@@ -1,4 +1,6 @@
 asgiref==3.8.1
+boto3==1.34.112
+botocore==1.34.112
 Brotli==1.1.0
 click==8.1.7
 colorama==0.4.6
@@ -8,6 +10,7 @@ django-admin-honeypot==1.1.0
 django-debug-toolbar==4.3.0
 django-extensions==3.2.3
 django-phonenumber-field==7.3.0
+django-storages==1.14.3
 django-tinymce==4.0.0
 fontawesomefree==6.5.1
 gunicorn==22.0.0
