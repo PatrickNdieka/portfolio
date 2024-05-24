@@ -48,17 +48,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # packages
-    'debug_toolbar',
-    'django_extensions',
-    # 'whitenoise.runserver_nostatic',
     'phonenumber_field',
     'tinymce',
+    'storages',
     'fontawesomefree',
 
     # apps
     'authentication.apps.AuthenticationConfig',
     'core.apps.CoreConfig',
 ]
+
+if DEBUG:
+    INSTALLED_APPS.extend([
+        'debug_toolbar',
+        'django_extensions',
+    ])
 
 AUTH_USER_MODEL = 'authentication.Account'
 
@@ -160,22 +164,28 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# STORAGES = {
-#     'staticfiles': {
-#         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-#     },
-# }
-
-
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email setting
+# # AWS configurations
+# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', '')
+# AWS_S3_CUSTOM_DOMAIN = config('AWS_S3_CUSTOM_DOMAIN', '')
+
+# Email configurations
 EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
