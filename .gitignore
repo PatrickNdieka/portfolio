@@ -27,8 +27,8 @@ media
 .Python
 build/
 develop-eggs/
-static/
 dist/
+static/
 downloads/
 eggs/
 .eggs/

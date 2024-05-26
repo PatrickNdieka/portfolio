@@ -73,7 +73,7 @@ class ProjectPortfolio(models.Model):
 
         # Add the path to your custom templates directory
         template_path = os.path.join(
-            os.path.dirname(__file__), '..\\templates\\nbconvert_templates')
+            os.path.dirname(__file__), '../templates/nbconvert_templates')
         html_exporter.template_paths.append(template_path)
         (body, resources) = html_exporter.from_notebook_node(notebook_node)
 
