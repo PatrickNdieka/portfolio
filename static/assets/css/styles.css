@@ -263,7 +263,7 @@ img {
   z-index: -1;
 }
 
-[data-full-page="true"] .container::before {
+[data-full-page="true"] .footer .container::before {
   width: 100vw;
 }
 
