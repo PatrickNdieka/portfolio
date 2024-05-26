@@ -127,6 +127,19 @@ img {
   width: 100%;
 }
 
+input {
+  line-height: 0.95em;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  color: var(--fg-color);
+  background-color: var(--bg-color);
+  padding: 1em 0.5em;
+}
+
+input::placeholder {
+  color: var(--bs-accent-3);
+}
+
 .icon::before {
   /* for font awesome icon css settings */
   display: inline-block;
