@@ -1,3 +1,6 @@
+import os
+import nbformat
+from nbconvert import HTMLExporter
 from django.urls import reverse
 from django.db import models
 from django.contrib.auth import get_user_model
@@ -14,11 +17,20 @@ class StatusChoices(models.IntegerChoices):
     PUBLISHED = (1, _('Published'))
 
 
+class ContentType(models.TextChoices):
+    HTML = 'html', ('HTML')
+    NOTEBOOK = 'notebook', _('Jupyter Notebook')
+    PDF = 'pdf', _('PDF')
+
+
 class ProjectPortfolio(models.Model):
     title = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(max_length=255, unique=True)
     description = tinymce_models.HTMLField()
-    content = tinymce_models.HTMLField()
+    content_type = models.CharField(
+        max_length=20, choices=ContentType.choices, default=ContentType.HTML)
+    content = tinymce_models.HTMLField(null=True, blank=True)
+    file = models.FileField(upload_to='files/projects', null=True, blank=True)
     featured_image = models.ImageField(upload_to='images/projects/featured/')
     featured = models.BooleanField(
         verbose_name='Featured project', default=False)
@@ -38,6 +50,34 @@ class ProjectPortfolio(models.Model):
 
     def get_absolute_url(self):
         return reverse('core:portfolio_project_detail', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        if self.content_type == ContentType.NOTEBOOK:
+            self.content = self.convert_notebook_to_html()
+        super().save(*args, **kwargs)
+
+    def convert_notebook_to_html(self):
+        # Read the content of the file
+        file_content = self.file.read()
+        # Ensure the content is a string
+        if isinstance(file_content, bytes):
+            file_content = file_content.decode('utf-8')
+        # Parse the notebook content
+        try:
+            notebook_node = nbformat.reads(file_content, as_version=4)
+        except Exception as e:
+            raise ValueError(f"Error reading notebook content: {e}")
+        # Convert the notebook node to HTML
+        html_exporter = HTMLExporter()
+        html_exporter.template_file = 'custom.tpl'
+
+        # Add the path to your custom templates directory
+        template_path = os.path.join(
+            os.path.dirname(__file__), '..\\templates\\nbconvert_templates')
+        html_exporter.template_paths.append(template_path)
+        (body, resources) = html_exporter.from_notebook_node(notebook_node)
+
+        return body
 
 
 class Skill(models.Model):

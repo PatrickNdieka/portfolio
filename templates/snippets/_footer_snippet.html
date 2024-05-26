@@ -1,4 +1,56 @@
 <footer class="footer">
+  <div class="container">
+    <div class="row">
+      <form class="newsletter-form" method="POST">
+        <div class="newsletter-form__header">
+          <h2 class="newsletter-form__header-title">Subscribe</h2>
+          <p class="newsletter-form__header-description">
+            Sign up with your email address to receive new content.
+          </p>
+        </div>
+        <div class="newsletter-form__body">
+          <div class="form-fields-wrapper">
+            <div class="form-fields">
+              <input
+                name="fname"
+                type="text"
+                spellcheck="false"
+                placeholder="First Name" />
+            </div>
+            <div class="form-fields">
+              <input
+                name="lname"
+                type="text"
+                spellcheck="false"
+                placeholder="Last Name" />
+            </div>
+            <div class="form-fields">
+              <input
+                name="email"
+                type="email"
+                spellcheck="false"
+                placeholder="Email Address" />
+            </div>
+          </div>
+          <button class="btn" type="submit" value="Sign Up">Sign Up</button>
+        </div>
+        <div class="newsletter-form__footnote">
+          <p>We respect your privacy.</p>
+          <p>Thank you for being a subscriber!</p>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <span class="copyright">
+        Copyright &copy; Patrick Ndieka {{ current_year }}
+      </span>
+      <div class="mid-col"></div>
+      <div class="quicklinks">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+      </div>
+    </div>
+  </div>
   {% if social_links %}
   <div class="social-links">
     {% for platform, link in social_links.items %}
@@ -8,9 +60,10 @@
     {% endfor %}
   </div>
   {% endif %}
-  <button class="theme-toggle"></button>
+  <button class="theme-toggle"><span></span></button>
   <!-- Consent form -->
   <div
     id="consent-message-popup"
+    class="hide"
     data-url="{% url 'core:consent_message' %}"></div>
 </footer>

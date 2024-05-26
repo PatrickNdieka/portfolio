@@ -50,14 +50,14 @@ window.addEventListener("scroll", () => {
   }
 });
 
+const navigationBtns = navigation.querySelectorAll(".nav-item");
+
 const getActiveNavigation = (btn) => {
   navigationBtns.forEach((navBtn) => {
     navBtn.classList.remove("active");
   });
   btn.classList.add("active");
 };
-
-const navigationBtns = navigation.querySelectorAll(".nav-item");
 
 navigationBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {

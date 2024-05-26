@@ -81,7 +81,8 @@ class ProjectPortfolioAdmin(admin.ModelAdmin):
     readonly_fields = ('author',)
     date_hierarchy = "published_on"
     empty_value_display = "-Select option-"
-    radio_fields = {"status": admin.HORIZONTAL}
+    radio_fields = {"status": admin.HORIZONTAL,
+                    'content_type': admin.HORIZONTAL}
     inlines = (SkillInlineAdmin, ServiceInlineAdmin)
 
     def save_model(self, request, obj, form, change):

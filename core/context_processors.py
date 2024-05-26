@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from .models import ConfigurationSetting
 
 
@@ -24,4 +26,5 @@ def configurations(request):
     return {
         'social_links': social_links,
         'user_details': user_details,
+        'current_year': timezone.now().year,
     }
