@@ -65,6 +65,11 @@ class ProjectPortfolio(models.Model):
         except Exception as e:
             raise ValueError(f"Error reading notebook content: {e}")
         html_exporter = HTMLExporter()
+        html_exporter.template_name = 'basic'
+        # html_exporter.template_file = 'custom.tpl'
+        # template_path = os.path.join(
+        #     os.path.dirname(__file__), '../templates/nbconvert_templates')
+        # html_exporter.template_paths.append(template_path)
         (body, resources) = html_exporter.from_notebook_node(notebook_node)
 
         return body
