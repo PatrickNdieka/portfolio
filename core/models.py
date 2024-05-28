@@ -57,24 +57,14 @@ class ProjectPortfolio(models.Model):
         super().save(*args, **kwargs)
 
     def convert_notebook_to_html(self):
-        # Read the content of the file
         file_content = self.file.read()
-        # Ensure the content is a string
         if isinstance(file_content, bytes):
             file_content = file_content.decode('utf-8')
-        # Parse the notebook content
         try:
             notebook_node = nbformat.reads(file_content, as_version=4)
         except Exception as e:
             raise ValueError(f"Error reading notebook content: {e}")
-        # Convert the notebook node to HTML
         html_exporter = HTMLExporter()
-        html_exporter.template_file = 'custom.tpl'
-
-        # Add the path to your custom templates directory
-        template_path = os.path.join(
-            os.path.dirname(__file__), '../templates/nbconvert_templates')
-        html_exporter.template_paths.append(template_path)
         (body, resources) = html_exporter.from_notebook_node(notebook_node)
 
         return body

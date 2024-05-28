@@ -11498,7 +11498,7 @@ select[multiple].input-lg {
     font-size: 12px;
   }
 }
-.btn {
+/* .btn {
   display: inline-block;
   margin-bottom: 0;
   font-weight: normal;
@@ -11517,8 +11517,8 @@ select[multiple].input-lg {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-.btn:focus,
+} */
+/* .btn:focus,
 .btn:active:focus,
 .btn.active:focus,
 .btn.focus,
@@ -11539,9 +11539,9 @@ select[multiple].input-lg {
   background-image: none;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-}
+} */
 .btn.disabled,
-.btn[disabled],
+/* .btn[disabled],
 fieldset[disabled] .btn {
   cursor: not-allowed;
   opacity: 0.65;
@@ -11552,7 +11552,7 @@ fieldset[disabled] .btn {
 a.btn.disabled,
 fieldset[disabled] a.btn {
   pointer-events: none;
-}
+} */
 .btn-default {
   color: #333;
   background-color: #fff;
@@ -15210,12 +15210,12 @@ button.close {
 .clearfix:after,
 .dl-horizontal dd:before,
 .dl-horizontal dd:after,
-.container:before,
-.container:after,
+/* .container:before,
+.container:after, */
 .container-fluid:before,
 .container-fluid:after,
-.row:before,
-.row:after,
+/* .row:before,
+.row:after, */
 .form-horizontal .form-group:before,
 .form-horizontal .form-group:after,
 .btn-toolbar:before,
@@ -15245,9 +15245,9 @@ button.close {
 }
 .clearfix:after,
 .dl-horizontal dd:after,
-.container:after,
+/* .container:after, */
 .container-fluid:after,
-.row:after,
+/* .row:after, */
 .form-horizontal .form-group:after,
 .btn-toolbar:after,
 .btn-group-vertical > .btn-group:after,
