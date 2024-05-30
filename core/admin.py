@@ -2,7 +2,10 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 
-from .models import ProjectPortfolio, ConfigurationSetting, Section, SectionInformation, Service, Skill
+from .models import (
+    ProjectPortfolio, ConfigurationSetting, Section, SectionInformation,
+    Service, Skill, Subscription
+)
 
 
 class SectionInlineAdmin(admin.TabularInline):
@@ -138,3 +141,4 @@ admin.site.register(Section, SectionAdmin)
 admin.site.register(SectionInformation, SectionInformationAdmin)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(Skill, SkillAdmin)
+admin.site.register(Subscription)

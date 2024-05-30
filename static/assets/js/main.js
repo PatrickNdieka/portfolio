@@ -128,3 +128,16 @@ function getCookie(cookieName) {
 document.addEventListener("DOMContentLoaded", function () {
   checkConsentAndFetchMessage();
 });
+
+document.addEventListener("htmx:afterSwap", (event) => {
+  // Check if the swapped content is the modal content
+  if (event.detail.target.id === "modal") {
+    htmx.addClass(document.getElementById("modal"), "show");
+
+    // Add event listener to close button
+    document.querySelector("#modal .close").addEventListener("click", () => {
+      document.getElementById("modal").classList.remove("show");
+      document.getElementById("modal").firstElementChild.remove();
+    });
+  }
+});

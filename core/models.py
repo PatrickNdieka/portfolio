@@ -1,10 +1,18 @@
 import os
+import hashlib
 import nbformat
 from nbconvert import HTMLExporter
 from django.urls import reverse
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.core.signing import TimestampSigner
+from django.core.mail import send_mail, EmailMessage
+from django.template.loader import render_to_string
+from django.urls import reverse
+from django.conf import settings
 
 from phonenumber_field.modelfields import PhoneNumberField
 from tinymce import models as tinymce_models
@@ -168,3 +176,40 @@ class SectionInformation(models.Model):
     def get_value(self):
         field_name = f"{self.value_type}_value"
         return getattr(self, field_name, None)
+
+
+class Subscription(models.Model):
+    email = models.EmailField(max_length=100, unique=True)
+    full_name = models.CharField(max_length=200)
+    is_verified = models.BooleanField(
+        verbose_name='Email is verified', default=False)
+
+    def __str__(self):
+        return self.full_name
+
+    def generate_verification_token(self):
+        signer = TimestampSigner()
+        return signer.sign(urlsafe_base64_encode(force_bytes(self.pk)))
+
+    def send_verification_email(self, request):
+        token = self.generate_verification_token()
+        verification_link = request.build_absolute_uri(
+            reverse('core:verify_email', args=[token])
+        )
+
+        subject = 'Verify your email address'
+        html_message = render_to_string('core/email_templates/verify_email.html', {
+            'full_name': self.full_name,
+            'verification_link': verification_link,
+            'signature': 'Patrick Ndieka'
+
+        })
+
+        email = EmailMessage(
+            subject,
+            html_message,
+            settings.DEFAULT_FROM_EMAIL,
+            [self.email],
+        )
+        email.content_subtype = "html"
+        email.send(fail_silently=False)

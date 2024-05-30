@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Verify Your Subscription - {{ portfolio_name }}</title>
+    <style>
+      /* Add your email styling here */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+      p {
+        margin: 1em 0;
+      }
+      .container {
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .body-content {
+        padding: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="body-content">
+        <p>Hello {{ full_name }},</p>
+        <p>
+          Welcome to Patrick Ndieka's website! Thanks for subscribing to stay
+          updated on my work.
+        </p>
+        <p>To ensure you receive updates, please verify your email address:</p>
+        <p>
+          If the button doesn't work, you can copy and paste the link below into
+          your browser:
+        </p>
+        <a href="{{ verification_link }}" style="text-align: center">
+          {{ verification_link }}
+        </a>
+        <p style="text-align: center">
+          <a
+            href="{{ verification_link }}"
+            style="
+              background-color: #006653;
+              border: none;
+              border-radius: 5px;
+              color: #ffffff;
+              padding: 10px 20px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 16px;
+            ">
+            Verify Email
+          </a>
+        </p>
+        <p>
+          <small>
+            <strong>The link expires within the next 7 days.</strong>
+          </small>
+        </p>
+        <br />
+        <p>Thank you,</p>
+        <p>{{ signature }}</p>
+      </div>
+    </div>
+  </body>
+</html>

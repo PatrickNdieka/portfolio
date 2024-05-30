@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block meta %} {% endblock meta %}
+    <!-- title block -->
+    <title>Patrick Ndieka {% block title %} {% endblock title %}</title>
+    <!-- style sheets -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'assets/images/portfolio-logo.ico' %}" />
+    {% block stylesheets %}
+    <!-- One file includes all the Font Awesome Free icons and utilities -->
+    <link
+      href="{% static 'fontawesomefree/css/all.min.css' %}"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="{% static 'assets/css/styles.css' %}"
+      rel="stylesheet"
+      type="text/css" />
+    {% endblock stylesheets %}
+    {% block head %} {% endblock head %}
+  </head>
+  <body 
+    {% if not 'project' in request.path %}
+    data-full-page="true" 
+    {% elif project and project.content_type == 'notebook' %} 
+    class="jp-Notebook" data-jp-theme-light="true" jp-theme-name="JupyterLab Light" 
+    {% endif %}
+  >
+    <!-- body content -->
+    {% block body %} {% endblock body %}
+    <!-- scripts -->
+    <script src="{% static 'assets/js/htmx.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    {% block scripts %} {% endblock scripts %}
+  </body>
+</html>

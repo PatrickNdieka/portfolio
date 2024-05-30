@@ -1,0 +1,48 @@
+{% extends "basic.html" %}
+<!-- title  -->
+{% block title %}{{block.super}} | Email Verified {% endblock %}
+<!-- head  -->
+{% block head %}
+<style>
+  main {
+    display: flex;
+    min-height: 85.85vh;
+    padding-top: 5rem;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    z-index: 1;
+  }
+  .error-icon i {
+    color: #dc3545;
+    font-size: 5rem;
+  }
+  .btn {
+    background-color: var(--bs-accent);
+    cursor: pointer;
+  }
+</style>
+{% endblock head %}
+<!-- body -->
+{% block body %}
+<!-- navbar -->
+{% include 'snippets/_navbar_snippet.html' %}
+<main>
+  <div class="container">
+    <h1>Verification Link is Invalid or Expired</h1>
+    <p class="error-icon"><i class="fa-solid fa-link-slash"></i></p>
+    <p>
+      We're sorry, but the verification link you used is either invalid or has
+      expired.
+    </p>
+    <a href="{% url 'core:index' %}" class="btn">Go to Homepage</a>
+  </div>
+</main>
+{% block footer%}
+<!--  -->
+{% include 'snippets/_footer_snippet.html' %} {% endblock footer %}
+<!--  -->
+{% endblock body %}

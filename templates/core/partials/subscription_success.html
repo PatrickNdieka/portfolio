@@ -1,0 +1,22 @@
+{% extends 'snippets/_modal.html' %}
+<!--  -->
+{% block modal_size %}medium{% endblock modal_size%}
+<!--  -->
+{% block modal_title %}Subscription Successful!{% endblock modal_title %}
+<!--  -->
+{% block modal_content %}
+<p>
+  Thank you for subscribing, {{ full_name }}. We're excited to have you on
+  board!
+</p>
+<p>
+  A confirmation email has been sent to
+  <strong>{{ email }}</strong>
+  . Please check your inbox and verify your email address to complete the
+  subscription process.
+</p>
+<p>
+  If you do not receive the email within a few minutes, please check your spam
+  folder or subscribe again to recieve the verification email.
+</p>
+{% endblock modal_content %}

@@ -1,7 +1,14 @@
 <footer class="footer">
   <div class="container">
+    {% if include_subscriber_form %}
     <div class="row">
-      <form class="newsletter-form" method="POST">
+      <form
+        class="newsletter-form"
+        method="post"
+        hx-post="{% url 'core:subscribe' %}"
+        hx-target="#modal"
+        hx-swap="innerHTML"
+        hx-headers='{"X-CSRFToken": "{{csrf_token }}"}'>
         <div class="newsletter-form__header">
           <h2 class="newsletter-form__header-title">Subscribe</h2>
           <p class="newsletter-form__header-description">
@@ -9,30 +16,41 @@
           </p>
         </div>
         <div class="newsletter-form__body">
+          {% if form.NON_FIELD_ERRORS %}
+          <div>{{ form.NON_FIELD_ERRORS }}</div>
+          {% endif %} {% if form.email.errors %}
+          <div>{{ form.email.errors }}</div>
+          {% endif %}
           <div class="form-fields-wrapper">
             <div class="form-fields">
               <input
-                name="fname"
                 type="text"
-                spellcheck="false"
-                placeholder="First Name" />
+                name="first_name"
+                maxlength="100"
+                required
+                placeholder="First Name"
+                id="id_first_name" />
             </div>
             <div class="form-fields">
               <input
-                name="lname"
                 type="text"
-                spellcheck="false"
-                placeholder="Last Name" />
+                name="last_name"
+                maxlength="100"
+                required
+                placeholder="Last Name"
+                id="id_last_name" />
             </div>
             <div class="form-fields">
               <input
-                name="email"
                 type="email"
-                spellcheck="false"
-                placeholder="Email Address" />
+                name="email"
+                maxlength="100"
+                required
+                placeholder="Email Address"
+                id="id_email" />
             </div>
           </div>
-          <button class="btn" type="submit" value="Sign Up">Sign Up</button>
+          <button class="btn" type="submit" value="Sign Up">Subscribe</button>
         </div>
         <div class="newsletter-form__footnote">
           <p>We respect your privacy.</p>
@@ -40,6 +58,7 @@
         </div>
       </form>
     </div>
+    {% endif %}
     <div class="row">
       <span class="copyright">
         Copyright &copy; Patrick Ndieka {{ current_year }}
@@ -66,4 +85,9 @@
     id="consent-message-popup"
     class="hide"
     data-url="{% url 'core:consent_message' %}"></div>
+  <dialog
+    id="modal"
+    class="modal"
+    aria-labelledby="modal-title"
+    aria-modal="true"></dialog>
 </footer>
