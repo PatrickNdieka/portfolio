@@ -1,4 +1,4 @@
-{% extends "basic.html" %}
+{% extends "basic.html" %} {% load static %}
 <!-- title  -->
 {% block title %}{{block.super}} | Email Verified {% endblock %}
 <!-- head  -->
@@ -16,9 +16,8 @@
     gap: 1rem;
     z-index: 1;
   }
-  .error-icon i {
-    color: #dc3545;
-    font-size: 5rem;
+  img {
+    height: 5rem;
   }
   .btn {
     background-color: var(--bs-accent);
@@ -33,7 +32,9 @@
 <main>
   <div class="container">
     <h1>Verification Link is Invalid or Expired</h1>
-    <p class="error-icon"><i class="fa-solid fa-link-slash"></i></p>
+    <p class="error-icon">
+      <img src="{% static 'assets/images/email_fail.png' %}" />
+    </p>
     <p>
       We're sorry, but the verification link you used is either invalid or has
       expired.

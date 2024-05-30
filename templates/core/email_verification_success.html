@@ -1,4 +1,4 @@
-{% extends "basic.html" %}
+{% extends "basic.html" %} {% load static %}
 <!-- title  -->
 {% block title %}{{block.super}} | Email Verified {% endblock %}
 <!-- head  -->
@@ -16,9 +16,8 @@
     gap: 1rem;
     z-index: 1;
   }
-  .error-icon i {
-    color: #dc3545;
-    font-size: 5rem;
+  img {
+    height: 5rem;
   }
   .btn {
     background-color: var(--bs-accent);
@@ -33,7 +32,9 @@
 <main>
   <div class="container">
     <h1>Email Verified Successfully</h1>
-    <p class="success-icon"><i class="fa-regular fa-circle-check"></i></p>
+    <p class="success-icon">
+      <img src="{% static 'assets/images/email_success.png' %}" />
+    </p>
     <p>
       Thank you for verifying your email address. Your subscription is now
       active.
@@ -41,8 +42,4 @@
     <a href="{% url 'core:index' %}" class="btn">Go to Homepage</a>
   </div>
 </main>
-{% block footer%}
-<!--  -->
-{% include 'snippets/_footer_snippet.html' %} {% endblock footer %}
-<!--  -->
 {% endblock body %}
