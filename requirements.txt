@@ -10,6 +10,7 @@ colorama==0.4.6
 defusedxml==0.7.1
 dj-database-url==2.1.0
 Django==4.2.13
+django-after-response==0.2.2
 django-debug-toolbar==4.3.0
 django-extensions==3.2.3
 django-phonenumber-field==7.3.0
