@@ -246,6 +246,19 @@ input::placeholder {
   margin-bottom: 1rem;
 }
 
+.form-errors {
+  display: block;
+  color: #dc3545;
+  list-style-position: inside;
+  list-style-type: decimal;
+  text-align: left;
+  padding: 1rem;
+}
+
+.form-errors li {
+  margin-bottom: 0.5rem;
+}
+
 .footer {
   position: relative;
   left: 30%;
@@ -573,7 +586,7 @@ input::placeholder {
   justify-content: space-between;
   align-items: center;
   padding-bottom: 15px;
-  border-bottom: 1px solid var(--bs-accent);
+  border-bottom: 1px solid var(--fg-color-5);
   padding: 1rem;
 }
 
@@ -610,7 +623,7 @@ input::placeholder {
 .modal-footer {
   display: flex;
   justify-content: flex-end;
-  border-top: 1px solid var(--bs-accent);
+  border-top: 1px solid var(--fg-color-5);
   padding: 1rem;
 }
 

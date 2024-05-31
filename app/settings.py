@@ -48,10 +48,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # packages
-    'phonenumber_field',
-    'tinymce',
-    'storages',
+    'after_response',
     'fontawesomefree',
+    'phonenumber_field',
+    'storages',
+    'tinymce',
 
     # apps
     'authentication.apps.AuthenticationConfig',
@@ -200,4 +201,18 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 # TinyMCE configurations
 TINYMCE_DEFAULT_CONFIG = {
     'width': '100%',
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
 }

@@ -1,5 +1,4 @@
-import os
-import hashlib
+import after_response
 import nbformat
 from nbconvert import HTMLExporter
 from django.urls import reverse
@@ -18,6 +17,20 @@ from phonenumber_field.modelfields import PhoneNumberField
 from tinymce import models as tinymce_models
 
 User = get_user_model()
+
+
+@after_response.enable
+def send_email(subject, recipient_email, message, content_subtype=None):
+    email = EmailMessage(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        [recipient_email],
+    )
+    if content_subtype == 'html':
+        email.content_subtype = 'html'
+
+    email.send(fail_silently=False)
 
 
 class StatusChoices(models.IntegerChoices):
@@ -184,6 +197,9 @@ class Subscription(models.Model):
     is_verified = models.BooleanField(
         verbose_name='Email is verified', default=False)
 
+    class Meta:
+        verbose_name = 'Subscriber'
+
     def __str__(self):
         return self.full_name
 
@@ -205,11 +221,9 @@ class Subscription(models.Model):
 
         })
 
-        email = EmailMessage(
+        send_email.after_response(
             subject,
+            self.email,
             html_message,
-            settings.DEFAULT_FROM_EMAIL,
-            [self.email],
+            content_subtype='html'
         )
-        email.content_subtype = "html"
-        email.send(fail_silently=False)

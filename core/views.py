@@ -1,7 +1,6 @@
-import hashlib
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http import JsonResponse, HttpResponseNotAllowed
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
 from django.core.signing import BadSignature, SignatureExpired, TimestampSigner
@@ -79,14 +78,18 @@ class SubscriptionCreateView(CreateView):
     template_name = 'core/partials/subscription_success.html'
     success_url = reverse_lazy('core:index')
 
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        self.object.send_verification_email(self.request)
-        print(self.object)
-        return render(self.request, self.template_name, {
-            'full_name': self.object.full_name,
-            'email': self.object.email,
-        })
+    def post(self, request, *args, **kwargs):
+        form = SubscriptionForm(request.POST)
+        if form.is_valid():
+            subscription = form.save()
+            subscription.send_verification_email(request)
+            return render(self.request, self.template_name, {
+                'full_name': subscription.full_name,
+                'email': subscription.email,
+            })
+        return render(self.request, 'core/partials/form_errors.html', {
+            'form': form
+        }, status=400)
 
     def get(self, request, *args, **kwargs):
         return HttpResponseNotAllowed(['POST'])

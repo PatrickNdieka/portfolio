@@ -132,12 +132,33 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("htmx:afterSwap", (event) => {
   // Check if the swapped content is the modal content
   if (event.detail.target.id === "modal") {
-    htmx.addClass(document.getElementById("modal"), "show");
-
-    // Add event listener to close button
-    document.querySelector("#modal .close").addEventListener("click", () => {
-      document.getElementById("modal").classList.remove("show");
-      document.getElementById("modal").firstElementChild.remove();
-    });
+    clearNewsletterForm();
+    showModalOnHtmx();
   }
 });
+
+document.body.addEventListener("htmx:afterRequest", function (event) {
+  if (event.detail.xhr.status === 400 && event.detail.target.id === "modal") {
+    const errorHtml = event.detail.xhr.response;
+    modal = document.getElementById("modal");
+    modal.innerHTML = errorHtml;
+    clearNewsletterForm();
+    showModalOnHtmx();
+  }
+});
+
+function clearNewsletterForm() {
+  const subscriberInputs = document.querySelectorAll(".newsletter-form input");
+  subscriberInputs.forEach((input) => {
+    input.value = "";
+  });
+}
+
+function showModalOnHtmx() {
+  // Add event listener to close button
+  document.querySelector("#modal .close").addEventListener("click", () => {
+    document.getElementById("modal").classList.remove("show");
+    document.getElementById("modal").firstElementChild.remove();
+  });
+  htmx.addClass(document.getElementById("modal"), "show");
+}

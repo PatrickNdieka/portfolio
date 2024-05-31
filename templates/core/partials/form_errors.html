@@ -1,0 +1,14 @@
+{% extends 'snippets/_modal.html' %}
+<!--  -->
+{% block modal_size %}medium{% endblock modal_size%}
+<!--  -->
+{% block modal_title %}Subscription Failed!{% endblock modal_title %}
+<!--  -->
+{% block modal_content %}
+<p>The following errors were encountered during submission of the form.</p>
+<ul class="form-errors">
+  {% for field, errors in form.errors.items %}
+  <li>{{ field|title }}: {{ errors|striptags }}</li>
+  {% endfor %}
+</ul>
+{% endblock modal_content %}
