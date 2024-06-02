@@ -11,21 +11,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <link
   rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
-<script>
-  hljs.initHighlightingOnLoad();
-</script>
+  type="text/css"
+  href="{% static 'assets/css/notebook.css' %}" />
 <link
-  href="{% static 'assets/css/notebook.css' %}"
+  id="notebook_styles_variables"
   rel="stylesheet"
-  type="text/css" />
-<!-- <script
+  type="text/css"
+  href="{% static 'assets/css/notebook_light_mode.css' %}" />
+
+<!-- Load mathjax -->
+<script
   type="text/javascript"
   async=""
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_CHTML-full,Safe"></script> -->
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_CHTML-full,Safe"></script>
 <!-- MathJax configuration -->
-<!-- <script type="text/x-mathjax-config;executed=true">
+<script type="text/x-mathjax-config;executed=true">
   init_mathjax = function() {
       if (window.MathJax) {
       // MathJax loaded
@@ -55,6 +55,7 @@
   }
   init_mathjax();
 </script>
+<!-- End of mathjax configuration -->
 <script type="module">
   document.addEventListener("DOMContentLoaded", async () => {
     const diagrams = document.querySelectorAll(".jp-Mermaid > pre.mermaid");
@@ -158,7 +159,15 @@
 
     void Promise.all([...diagrams].map(renderOneMarmaid));
   });
-</script> -->
+</script>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'assets/css/mermaid.css' %}" />
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'assets/css/mathjax.css' %}" />
 {% endif %}
 <!--  -->
 {{ block.super }}

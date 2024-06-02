@@ -7,6 +7,8 @@
     {% block meta %} {% endblock meta %}
     <!-- title block -->
     <title>Patrick Ndieka {% block title %} {% endblock title %}</title>
+    <!-- htmx javascript -->
+    <script src="{% static 'assets/js/htmx.min.js' %}"></script>
     <!-- style sheets -->
     <link
       rel="icon"
@@ -35,7 +37,6 @@
     <!-- body content -->
     {% block body %} {% endblock body %}
     <!-- scripts -->
-    <script src="{% static 'assets/js/htmx.min.js' %}"></script>
     <script src="{% static 'assets/js/main.js' %}"></script>
     {% block scripts %} {% endblock scripts %}
   </body>

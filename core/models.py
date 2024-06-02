@@ -1,14 +1,17 @@
 import after_response
 import nbformat
 from nbconvert import HTMLExporter
+from bs4 import BeautifulSoup
+
 from django.urls import reverse
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.utils.http import urlsafe_base64_encode
+from django.utils.safestring import mark_safe
 from django.utils.encoding import force_bytes
 from django.core.signing import TimestampSigner
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.conf import settings
@@ -31,6 +34,25 @@ def send_email(subject, recipient_email, message, content_subtype=None):
         email.content_subtype = 'html'
 
     email.send(fail_silently=False)
+
+
+@after_response.enable
+def convert_notebook_to_html(project):
+    file_content = project.file.read()
+    if isinstance(file_content, bytes):
+        file_content = file_content.decode('utf-8')
+    try:
+        notebook_node = nbformat.reads(file_content, as_version=4)
+    except Exception as e:
+        raise ValueError(f"Error reading notebook content: {e}")
+    html_exporter = HTMLExporter()
+    (body, resources) = html_exporter.from_notebook_node(notebook_node)
+    soup = BeautifulSoup(body, 'html.parser')
+    content = ''.join(
+        str(element) for element in soup.main.children if element.name is not None
+    )
+    project.content = mark_safe(content)
+    project.save()
 
 
 class StatusChoices(models.IntegerChoices):
@@ -73,27 +95,10 @@ class ProjectPortfolio(models.Model):
         return reverse('core:portfolio_project_detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        if self.content_type == ContentType.NOTEBOOK:
-            self.content = self.convert_notebook_to_html()
         super().save(*args, **kwargs)
-
-    def convert_notebook_to_html(self):
-        file_content = self.file.read()
-        if isinstance(file_content, bytes):
-            file_content = file_content.decode('utf-8')
-        try:
-            notebook_node = nbformat.reads(file_content, as_version=4)
-        except Exception as e:
-            raise ValueError(f"Error reading notebook content: {e}")
-        html_exporter = HTMLExporter()
-        html_exporter.template_name = 'basic'
-        # html_exporter.template_file = 'custom.tpl'
-        # template_path = os.path.join(
-        #     os.path.dirname(__file__), '../templates/nbconvert_templates')
-        # html_exporter.template_paths.append(template_path)
-        (body, resources) = html_exporter.from_notebook_node(notebook_node)
-
-        return body
+        print(self)
+        if self.content_type == ContentType.NOTEBOOK:
+            convert_notebook_to_html.after_response(self)
 
 
 class Skill(models.Model):

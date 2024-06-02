@@ -46,7 +46,7 @@
   }
 }
 
-[data-theme-mode="dark"] {
+[data-theme-light="false"] {
   --bs-backdrop: blur(16px) brightness(0);
   --bs-accent-2: var(--bs-grey);
   --bs-accent-3: var(--bs-coral);
@@ -58,7 +58,7 @@
   --fg-color-5: var(--bs-white-5);
 }
 
-[data-theme-mode="light"] {
+[data-theme-light="true"] {
   --bs-backdrop: blur(16px) brightness(2.25);
   --bs-accent-2: var(--bs-coral);
   --bs-accent-3: var(--bs-grey);
@@ -79,18 +79,27 @@ html {
   scroll-behavior: smooth;
 }
 
+/* notebook resets  */
+.jp-Notebook {
+  padding: 0 !important;
+}
+
 body {
-  background: var(--bg-color);
   color: var(--fg-color);
   font-family: var(--font-family);
+  isolation: isolate;
+  z-index: -1;
+  position: relative;
+}
+
+body.jp-Notebook,
+body {
+  background-color: var(--bg-color);
   background-image: var(--bg-image);
   background-position: right;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  isolation: isolate;
-  z-index: -1;
-  position: relative;
 }
 
 body::before {
@@ -219,12 +228,12 @@ input::placeholder {
   }
 }
 
-[data-theme-mode="dark"] .card {
+[data-theme-light="false"] .card {
   border-color: var(--bs-shadow-color);
   box-shadow: 0 2px 4px var(--bs-shadow-color);
 }
 
-[data-theme-mode="light"] .card {
+[data-theme-light="true"] .card {
   border: 1px solid var(--bg-color-5);
   box-shadow: 0 2px 4px var(--bg-color-5);
 }
@@ -719,39 +728,39 @@ input::placeholder {
   transform: translateY(-50%) scaleX(1);
 }
 
-[data-theme-mode="light"] .theme-toggle span::before {
+[data-theme-light="true"] .theme-toggle span::before {
   background-image: url("../images/light_mode_icon-black.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-[data-theme-mode="light"] .theme-toggle:hover span::before {
+[data-theme-light="true"] .theme-toggle:hover span::before {
   background-image: url("../images/light_mode_icon-white.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-[data-theme-mode="light"] .theme-toggle span::after {
+[data-theme-light="true"] .theme-toggle span::after {
   content: "Switch to dark theme";
 }
 
-[data-theme-mode="dark"] .theme-toggle span::before {
+[data-theme-light="false"] .theme-toggle span::before {
   background-image: url("../images/dark_mode_icon-white.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-[data-theme-mode="dark"] .theme-toggle:hover span::before {
+[data-theme-light="false"] .theme-toggle:hover span::before {
   background-image: url("../images/dark_mode_icon-black.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-[data-theme-mode="dark"] .theme-toggle span::after {
+[data-theme-light="false"] .theme-toggle span::after {
   content: "Switch to light theme";
 }
 
@@ -838,7 +847,8 @@ input::placeholder {
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--bg-linear-gradient);
+  opacity: 0.97;
+  background: var(--bs-accent-2);
   backdrop-filter: var(--bs-backdrop);
 }
 
@@ -1061,10 +1071,8 @@ input::placeholder {
   left: 0;
   width: 30%;
   height: 100%;
-  padding: 50px;
   z-index: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .sidebar::after {
@@ -1074,30 +1082,40 @@ input::placeholder {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: var(--bs-accent-2-5);
-  backdrop-filter: var(--bs-backdrop);
+  background-color: var(--bs-accent-2);
   z-index: -2;
 }
 
-.sidebar .profile-image {
+.sidebar > div {
+  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 140px;
+  height: 100%;
+  padding: 1rem;
+  min-height: max-content;
+  overflow-y: auto;
+}
+
+.sidebar .profile-image {
+  width: 140px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px var(--bs-accent-3-5);
+  overflow: hidden;
   margin: 20px auto;
 }
 
 .profile-image img {
-  aspect-ratio: 1/1;
-  border-radius: 50%;
-  box-shadow: 0 2px 4px var(--bs-accent-2);
+  object-fit: cover;
 }
 
 .sidebar .intro {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 0;
+  padding-bottom: 1.5rem;
 }
 
 .sidebar .intro-title {
@@ -1131,8 +1149,9 @@ input::placeholder {
 
 .sidebar .lead-paragraph {
   color: var(--bs-accent-3-5);
-  padding: 0 20px;
   text-align: center;
+  max-width: 600px;
+  padding: 0 20px;
   margin-bottom: 40px;
 }
 
@@ -1710,21 +1729,23 @@ input::placeholder {
   z-index: -1;
 }
 
-[data-theme-mode="light"]
+/* [data-theme-light="true"]
   .individual-portfolio
   .project__body.notebook::before {
   background-color: var(--bg-color);
-}
+} */
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   .individual-portfolio .project__body.notebook::before {
     background-color: var(--fg-color);
   }
-}
+} */
 
-[data-theme-mode="dark"] .individual-portfolio .project__body.notebook::before {
+/* [data-theme-light="false"]
+  .individual-portfolio
+  .project__body.notebook::before {
   background-color: var(--fg-color);
-}
+} */
 
 .individual-portfolio .project__body img {
   width: unset;
@@ -1737,7 +1758,7 @@ input::placeholder {
   padding-top: 1em;
 }
 
-[data-theme-mode="light"]
+/* [data-theme-light="true"]
   .individual-portfolio
   .notebook
   .section__title.section__title--project {
@@ -1750,12 +1771,12 @@ input::placeholder {
   }
 }
 
-[data-theme-mode="dark"]
+[data-theme-light="false"]
   .individual-portfolio
   .notebook
   .section__title.section__title--project {
   color: var(--bg-color);
-}
+} */
 
 .individual-portfolio .project__body .project__description {
   text-align: center;
@@ -1764,8 +1785,8 @@ input::placeholder {
   font-size: 1.25em;
   font-weight: 700;
 }
-
-[data-theme-mode="light"]
+/* 
+[data-theme-light="true"]
   .individual-portfolio
   .project__body.notebook
   .project__description {
@@ -1776,13 +1797,13 @@ input::placeholder {
   .individual-portfolio .project__body.notebook .project__description {
     color: var(--bg-color);
   }
-}
+} */
 
-[data-theme-mode="dark"]
+/* [data-theme-light="false"]
   .individual-portfolio
   .project__body.notebook
   .project__description {
   color: var(--bg-color);
-}
+} */
 
 /* end of portfolio projects styles */
