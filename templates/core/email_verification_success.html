@@ -4,16 +4,20 @@
 <!-- head  -->
 {% block head%}
 <style>
+  body {
+    overflow: hidden;
+  }
   main {
     display: flex;
-    min-height: 85.85vh;
+    min-height: 85.95vh;
     padding-top: 5rem;
     justify-content: center;
   }
-  .container {
+  .container-flex {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     gap: 1rem;
     z-index: 1;
   }
@@ -31,7 +35,7 @@
 <!-- navbar -->
 {% include 'snippets/_navbar_snippet.html' %}
 <main>
-  <div class="container">
+  <div class="container-flex">
     <h1>Email Verified Successfully</h1>
     <p class="success-icon">
       <img src="{% static 'assets/images/email_success.png' %}" />
